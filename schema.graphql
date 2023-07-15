@@ -10,5 +10,6 @@ type Game @entity {
   winningColor: String!
   result: String!
   blockHeight: BigInt!
+  timestamp: BigInt!
   txHash: String!
 }

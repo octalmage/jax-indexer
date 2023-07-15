@@ -5,11 +5,9 @@ import {
 } from "@subql/types-cosmos";
 
 export async function handleEvent(event: CosmosEvent): Promise<void> {
-  logger.warn("GAME FOUND");
   const resultAttr = event.event.attributes.find(attr => attr.key === 'gameResult')
   const playerAttr = event.event.attributes.find(attr => attr.key === 'player')
   if (typeof resultAttr !== 'undefined' && typeof playerAttr !== 'undefined') {
-    logger.warn("SAVING GAME");
     const parsedEvent = JSON.parse(resultAttr.value);
     const gameRecord = Game.create({
       id: `${event.tx.hash}-${event.msg.idx}-${event.idx}`,
@@ -18,6 +16,7 @@ export async function handleEvent(event: CosmosEvent): Promise<void> {
       player: playerAttr.value,
       guessedColor: parsedEvent.colorGuess,
       winningColor: parsedEvent.winningColor,
+      timestamp: BigInt(parsedEvent.startTime),
       result: parsedEvent.result,
     });
   
