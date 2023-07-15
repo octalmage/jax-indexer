@@ -46,12 +46,12 @@ dataSources:
         - handler: handleEvent
           kind: cosmos/EventHandler
           filter:
-            type: execute
+            type: contract
             messageFilter:
               type: "/jax.MsgExecuteContract"
               # contractCall field can be specified here too
               #values: # A set of key/value pairs that are present in the message data
-              #contract: "juno1v99ehkuetkpf0yxdry8ce92yeqaeaa7lyxr2aagkesrw67wcsn8qxpxay0"
+              contract: "jax150nr7pvzyue8m5sqmnvajyn0us9scvr4x76hjk"
         # - handler: handleMessage
         #   kind: cosmos/MessageHandler
         #   filter:
