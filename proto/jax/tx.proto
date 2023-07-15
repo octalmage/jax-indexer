@@ -1,0 +1,85 @@
+syntax = "proto3";
+package jax;
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/terra-money/jax/x/jax/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc StoreCode(MsgStoreCode) returns (MsgStoreCodeResponse);
+  rpc ExecuteContract(MsgExecuteContract) returns (MsgExecuteContractResponse);
+  rpc UpdateContract (MsgUpdateContract) returns (MsgUpdateContractResponse);
+  rpc UpdateContractAdmin(MsgUpdateContractAdmin) returns (MsgUpdateContractAdminResponse);
+  rpc ValidateCode (MsgValidateCode) returns (MsgValidateCodeResponse);
+  // this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgStoreCode {
+  string creator = 1;
+  string admin = 2;
+  string code = 3;
+  string params = 4;
+  // Coins that are transferred to the contract on deploy
+  repeated cosmos.base.v1beta1.Coin coins = 5 [
+    (gogoproto.moretags)     = "yaml:\"coins\"",
+    (gogoproto.nullable)     = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+message MsgStoreCodeResponse {
+  string address = 1;
+  string result = 2;
+}
+
+message MsgExecuteContract {
+  string sender = 1;
+  string contract = 2;
+  string method = 3;
+  string params = 4;
+  // Coins that are transferred to the contract on execution
+  repeated cosmos.base.v1beta1.Coin coins = 5 [
+    (gogoproto.moretags)     = "yaml:\"coins\"",
+    (gogoproto.nullable)     = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+message MsgExecuteContractResponse {
+  string result = 1;
+}
+
+message MsgUpdateContract {
+  string sender  = 1;
+  string contract = 2;
+  string code     = 3;
+}
+
+message MsgUpdateContractResponse {
+  string result = 1;
+}
+
+
+message MsgUpdateContractAdmin {
+  string creator = 1;
+  string contract = 2;
+  string admin = 3;
+}
+
+message MsgUpdateContractAdminResponse {
+  string admin = 1;
+}
+
+message MsgValidateCode {
+  string creator = 1;
+  string code    = 2;
+}
+
+message MsgValidateCodeResponse {}
+
+
+// this line is used by starport scaffolding # proto/tx/message

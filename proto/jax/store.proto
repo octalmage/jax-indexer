@@ -1,0 +1,8 @@
+syntax = "proto3";
+package jax;
+
+option go_package = "github.com/terra-money/jax/x/jax/types";
+
+message Store {
+  string value = 1; 
+}

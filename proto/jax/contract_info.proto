@@ -1,0 +1,12 @@
+syntax = "proto3";
+package jax;
+
+option go_package = "github.com/terra-money/jax/x/jax/types";
+
+message ContractInfo {
+  string address = 1; 
+  string creator = 2; 
+  string admin = 3; 
+  string code = 4; 
+  string compiledCode = 5; 
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package jax;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/terra-money/jax/x/jax/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}

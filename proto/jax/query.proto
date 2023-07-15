@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package jax;
+
+import "gogoproto/gogo.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "jax/params.proto";
+
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/terra-money/jax/x/jax/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/jax/params";
+  
+  }
+
+  // this line is used by starport scaffolding # 2
+  
+  // Queries smart contract state
+  rpc GetContractStorage (QueryGetContractStorageRequest) returns (QueryGetContractStorageResponse) {
+    option (google.api.http) = {
+      get: "/jax/getContractStorage/{contract}/{key}"
+      additional_bindings {
+        get: "/jax/getContractStorage/{contract}/{key}/{field}"
+      }
+    };
+  }
+  
+  // Queries details about a smart contract, like current admin and contract source code.
+  rpc GetContractInfo (QueryGetContractInfoRequest) returns (QueryGetContractInfoResponse) {
+    option (google.api.http).get = "/jax/getContractInfo/{contract}";
+  
+  }
+  
+  // Queries a list of fields in a map for a smart contract.
+  rpc GetContractStorageFields (QueryGetContractStorageFieldsRequest) returns (QueryGetContractStorageFieldsResponse) {
+    option (google.api.http).get = "/jax/getContractStorageFields/{contract}/{key}";
+  
+  }
+  
+  // Queries a list state items for a specific contract.
+  rpc GetBatchContractStorage (QueryGetBatchContractStorageRequest) returns (QueryGetBatchContractStorageResponse) {
+    option (google.api.http).get = "/jax/getBatchContractStorage/{contract}";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+// this line is used by starport scaffolding # 3
+message QueryGetContractStorageRequest {
+  string contract = 1;
+  string key      = 2;
+  string field    = 3;
+}
+
+message QueryGetContractStorageResponse {
+  string data = 1;
+}
+
+message QueryGetContractInfoRequest {
+  string contract = 1;
+}
+
+message QueryGetContractInfoResponse {
+  string creator      = 1;
+  string admin        = 2;
+  string code         = 3;
+  string compiledCode = 4;
+}
+
+message QueryGetContractStorageFieldsRequest {
+  string contract = 1;
+  string key      = 2;
+}
+
+message QueryGetContractStorageFieldsResponse {
+  repeated string keys = 1;
+}
+
+message QueryGetBatchContractStorageRequest {
+  string contract = 1;
+  repeated string keyFields = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    title: "Repeated object with the key and/or field of the state to query",
+    description: "Use JSON to represent the data to fetch like: `{\"key\": \"name\"}` or `{\"key\": \"name\", \"field\": \"first\"}`"
+  }];
+}
+
+message QueryGetBatchContractStorageResponse {
+  repeated string datas = 1;
+}
+
