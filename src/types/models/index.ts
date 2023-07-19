@@ -2,5 +2,5 @@
 
 // Auto-generated , DO NOT EDIT
 
-export {Game} from "./Game"
+export {Contract} from "./Contract"
 

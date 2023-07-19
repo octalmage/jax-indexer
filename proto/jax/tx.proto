@@ -2,9 +2,15 @@ syntax = "proto3";
 package jax;
 
 import "gogoproto/gogo.proto";
-import "cosmos/base/v1beta1/coin.proto";
 
 // this line is used by starport scaffolding # proto/tx/import
+
+message Coin {
+  option (gogoproto.equal) = true;
+
+  string denom  = 1;
+  string amount = 2 [(gogoproto.customtype) = "Int", (gogoproto.nullable) = false];
+}
 
 option go_package = "github.com/terra-money/jax/x/jax/types";
 
@@ -24,7 +30,7 @@ message MsgStoreCode {
   string code = 3;
   string params = 4;
   // Coins that are transferred to the contract on deploy
-  repeated cosmos.base.v1beta1.Coin coins = 5 [
+  repeated Coin coins = 5 [
     (gogoproto.moretags)     = "yaml:\"coins\"",
     (gogoproto.nullable)     = false,
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
@@ -42,7 +48,7 @@ message MsgExecuteContract {
   string method = 3;
   string params = 4;
   // Coins that are transferred to the contract on execution
-  repeated cosmos.base.v1beta1.Coin coins = 5 [
+  repeated Coin coins = 5 [
     (gogoproto.moretags)     = "yaml:\"coins\"",
     (gogoproto.nullable)     = false,
     (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"

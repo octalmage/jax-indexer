@@ -2,14 +2,12 @@
 # Add the `@index` or `@index(unique: true)` annotation after any non-key field
 # https://academy.subquery.network/build/graphql.html#indexing-by-non-primary-key-field
 
-
-type Game @entity {
+type Contract @entity {
   id: ID!
-  player: String!
-  guessedColor: String!
-  winningColor: String!
-  result: String!
+  creator: String!
+  admin: String!
+  contract: String!
+  code: String!
   blockHeight: BigInt!
-  timestamp: BigInt!
   txHash: String!
 }
